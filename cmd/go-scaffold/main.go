@@ -72,7 +72,7 @@ func sqlTypeToGoType(sqlType string) string {
 	case "datetime":
 		return "time.Time"
 	case "smallint":
-		return "int16"
+		return "int"
 	case "decimal":
 		return "float64"
 	case "float":
