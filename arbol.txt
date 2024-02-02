@@ -1,0 +1,42 @@
+Listado de rutas de carpetas para el volumen DATA
+El número de serie del volumen es A280-F48D
+D:.
++---bin
++---cmd
+¦   +---go-ddd
+¦   +---go-scaffold
++---internal
+¦   +---application
+¦   ¦   +---command
+¦   ¦   ¦   +---ALLNote
+¦   ¦   ¦       +---create
+¦   ¦   ¦       +---query
+¦   ¦   +---interfaces
+¦   ¦   +---mapper
+¦   ¦   +---services
+¦   +---domain
+¦   ¦   +---entities
+¦   ¦   +---repositories
+¦   +---infrastructure
+¦   ¦   +---db
+¦   ¦   ¦   +---mssql
+¦   ¦   ¦       +---mappers
+¦   ¦   ¦       +---models
+¦   ¦   ¦       +---respoitories
+¦   ¦   +---db_test
+¦   ¦       +---mssql
+¦   +---interface
+¦       +---api
+¦           +---graphql
+¦           ¦   +---gql
+¦           ¦   ¦   +---allnote
+¦           ¦   ¦   +---kendo
+¦           ¦   +---handler
+¦           ¦   +---resolvers
+¦           +---rest
+¦           ¦   +---request
+¦           ¦       +---allnote
+¦           ¦       +---partner
+¦           +---rest_test
++---tmp
+    +---models
