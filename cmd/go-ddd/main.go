@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/labstack/echo-contrib/echoprometheus"
@@ -11,15 +10,14 @@ import (
 	mssql "github.con/AndyGo/go-ddd/internal/infrastructure/db/mssql/respoitories"
 	gqlHandler "github.con/AndyGo/go-ddd/internal/interface/api/graphql/handler"
 	"github.con/AndyGo/go-ddd/internal/interface/api/rest"
-	web "github.con/AndyGo/go-ddd/internal/interface/web"
 	"github.con/AndyGo/go-ddd/internal/interface/web/react"
 )
 
 func main() {
-	port := ":8080"
-	if err := web.Execute("cmd/go-app"); err != nil {
-		fmt.Println("Error:", err)
-	}
+	port := ":8081"
+	// if err := web.Execute("cmd/go-app"); err != nil {
+	// 	fmt.Println("Error:", err)
+	// }
 
 	// Instance Services
 	partnerRepo := mssql.NewPLSPartnerRepository()

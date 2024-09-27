@@ -16,7 +16,7 @@ func NewConnection(DbName string) (*sql.DB, error) {
 	} else {
 		db_name = DbName
 	}
-	dsn := fmt.Sprintf("sqlserver://sysugosrv02:UGO!dev0823@96.88.124.75:1433?database=%s&connection+timeout=30&encrypt=disable", db_name)
+	dsn := fmt.Sprintf("sqlserver://<username>:<password>@<host>:1433?database=%s&connection+timeout=30&encrypt=disable", db_name)
 	db, err := sql.Open("mssql", dsn)
 	if err != nil {
 		return nil, err

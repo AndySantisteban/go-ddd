@@ -2,7 +2,7 @@ package sqlite_test
 
 import (
 	"database/sql"
-	"fmt"
+	"log"
 	"testing"
 
 	"github.con/AndyGo/go-ddd/internal/domain/entities"
@@ -11,7 +11,7 @@ import (
 )
 
 func setupDatabase() (*sql.DB, error) {
-	database, err := mssql.NewConnection("")
+	database, err := mssql.NewConnection("CenturionNotes")
 	if err != nil {
 		panic("Failed to connect to database")
 	}
@@ -22,7 +22,7 @@ func setupDatabase() (*sql.DB, error) {
 func TestSQLPLSPartnerRepository_Select(t *testing.T) {
 	request := entities.DataSourceRequest{
 		Page:     1,
-		PageSize: 20,
+		PageSize: 10000,
 	}
 
 	t.Log("request ", request)
@@ -32,10 +32,11 @@ func TestSQLPLSPartnerRepository_Select(t *testing.T) {
 	if err != nil {
 		t.Error("Failed to connect to database")
 	}
-	var partners []models.PLSPartner
+	notes := make([]models.ALLNote, request.PageSize)
+
 	query := mssql.NewSQLQueryBuilder(sqlserver).
-		Select("Uid", "Account").
-		From("PLSPartner").
+		Select("*").
+		From("ALLNote").
 		ApplyDataSourceRequest(&request)
 
 	rows, total, err := query.Query()
@@ -47,20 +48,46 @@ func TestSQLPLSPartnerRepository_Select(t *testing.T) {
 	defer rows.Close()
 
 	for rows.Next() {
-		var partner models.PLSPartner
+		var note models.ALLNote
+		index := 0
+		if err := rows.Scan(
+			&note.Uid,
+			&note.ParentUid,
+			&note.UserUid,
+			&note.SubjectOld,
+			&note.CategoryUid,
+			&note.SubCategory,
+			&note.Note,
+			&note.Note_Plain,
+			&note.Priority,
+			&note.CommunicationCode,
+			&note.IsReminder,
+			&note.CompletedBy,
+			&note.CompletedDate,
+			&note.ScheduledStart,
+			&note.ScheduledEnd,
+			&note.OldRecId,
+			&note.AppTimeStamp,
+			&note.AppLastUpdatedBy,
+			&note.AppCreatedBy,
+			&note.ActivityUid,
+			&note.Subject,
+			&note.ContactName,
+			&note.AppTimeStampYear,
+			&note.SysTimeStamp,
+			&note.Note_PlainResume,
+			&note.ParentDepartmentUid,
+			&note.ParentAccount,
+			&note.ParentType,
+			&note.AppLastUpdated,
+		); err != nil {
+			log.Fatal("Error fetching or Note Uid mismatch", err)
 
-		if err := rows.Scan(&partner.Uid, &partner.Account); err != nil {
-			t.Error("Error fetching or PLSPartner Uid mismatch", err)
-			return
 		}
-		partners = append(partners, partner)
+		notes[index] = note
+		index++
 	}
 	t.Log("partners length:", total)
-	for i := 0; i < len(partners); i++ {
-		fmt.Printf("Partner :  account: %s , Uid: %s \n", partners[i].Account, partners[i].Uid)
-
-	}
-
 }
 
 func TestSQLPLSPartnerRepository_SelectByID(t *testing.T) {
